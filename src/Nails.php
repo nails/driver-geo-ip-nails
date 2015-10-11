@@ -5,21 +5,88 @@ namespace Nails\GeoIp\Driver;
 class Nails implements \Nails\GeoIp\Interfaces\Driver
 {
     /**
+     * The base url of the ipinfo.io service.
+     * @var string
+     */
+    const BASE_URL = 'http://ipinfo.io';
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * The access token for the ipinfo.io service
+     * @var string
+     */
+    private $sAccessToken;
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * Construct the driver
+     */
+    public function __construct()
+    {
+        $this->sAccessToken = defined('APP_GEO_IP_ACCESS_TOKEN') ? APP_GEO_IP_ACCESS_TOKEN : '';
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
      * @param string $sIp  The IP address to look up
      * @return \Nails\GeoIp\Result\Ip
      */
     public function lookup($sIp)
     {
-        $oResult = \Nails\Factory::factory('Ip', 'nailsapp/module-geo-ip');
+        $oIp       = \Nails\Factory::factory('Ip', 'nailsapp/module-geo-ip');
+        $oClient   = \Nails\Factory::factory('Guzzle');
+        $oResponse = $oClient->get(
+            $this::BASE_URL . '/' . $sIp . '/json',
+            array(
+                'token' => $this->sAccessToken
+            )
+        );
 
-        $oResult->setIp($sIp);
-        $oResult->setHostname('The Hostname');
-        $oResult->setCity('The City');
-        $oResult->setRegion('The Region');
-        $oResult->setCountry('The Country');
-        $oResult->setLat('The Lat');
-        $oResult->setLng('The Lng');
+        $oIp->setIp($sIp);
 
-        return $oResult;
+        if ($oResponse->getStatusCode() ===  200) {
+
+            $oJson = json_decode($oResponse->getBody());
+
+            if (!empty($oJson->hostname)) {
+
+                $oIp->setHostname($oJson->hostname);
+            }
+
+            if (!empty($oJson->city)) {
+
+                $oIp->setCity($oJson->city);
+            }
+
+            if (!empty($oJson->region)) {
+
+                $oIp->setRegion($oJson->region);
+            }
+
+            if (!empty($oJson->country)) {
+
+                $oIp->setCountry($oJson->country);
+            }
+
+            if (!empty($oJson->loc)) {
+
+                $aLatLng = explode(',', $oJson->loc);
+
+                if (!empty($aLatLng[0])) {
+
+                    $oIp->setLat($aLatLng[0]);
+                }
+
+                if (!empty($aLatLng[1])) {
+
+                    $oIp->setLng($aLatLng[1]);
+                }
+            }
+        }
+
+        return $oIp;
     }
 }
