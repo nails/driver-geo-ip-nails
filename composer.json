@@ -1,0 +1,42 @@
+{
+    "name": "nailsapp/driver-geo-ip-nails",
+    "keywords": ["Nails", "Shed Collective", "CodeIgniter", "GeoIP Module", "Driver"],
+    "homepage": "http://nailsapp.co.uk/modules/geo-ip/driver/nails",
+    "description": "This is the \"Nails\" driver for the Nails GeoIP module.",
+    "license": "MIT",
+    "authors":
+    [
+        {
+            "name": "Pablo de la Pena",
+            "email": "p@shedcollective.org",
+            "homepage": "http://shedcollective.org",
+            "role": "Developer"
+        }
+    ],
+    "support":
+    {
+        "email": "hello@shedcollective.org"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require":
+    {
+        "nailsapp/module-geo-ip": "dev-develop"
+    },
+    "require-dev":
+    {
+        "phpunit/phpunit": "4.*"
+    },
+    "extra":
+    {
+        "nails" :
+        {
+            "type": "driver",
+            "subType": "geo-ip"
+        }
+    },
+    "autoload":
+    {
+        "psr-4": {"Nails\\GeoIp\\Driver\\": "src/"}
+    }
+}
