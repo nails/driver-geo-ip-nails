@@ -2,6 +2,8 @@
 
 namespace Nails\GeoIp\Driver;
 
+use Nails\Factory;
+
 class Nails implements \Nails\GeoIp\Interfaces\Driver
 {
     /**
@@ -36,8 +38,8 @@ class Nails implements \Nails\GeoIp\Interfaces\Driver
      */
     public function lookup($sIp)
     {
-        $oIp     = \Nails\Factory::factory('Ip', 'nailsapp/module-geo-ip');
-        $oClient = \Nails\Factory::factory('HttpClient');
+        $oIp     = Factory::factory('Ip', 'nailsapp/module-geo-ip');
+        $oClient = Factory::factory('HttpClient');
 
         $oIp->setIp($sIp);
 
