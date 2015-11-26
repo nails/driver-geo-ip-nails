@@ -32,7 +32,11 @@
         "nails" :
         {
             "type": "driver",
-            "forModule": "nailsapp/module-geo-ip"
+            "forModule": "nailsapp/module-geo-ip",
+            "data": {
+                "namespace": "Nails\\GeoIp\\Driver\\",
+                "class": "Nails"
+            }
         }
     },
     "autoload":
