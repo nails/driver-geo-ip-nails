@@ -32,7 +32,7 @@
         "nails" :
         {
             "type": "driver",
-            "subType": "geo-ip"
+            "forModule": "nailsapp/module-geo-ip"
         }
     },
     "autoload":
