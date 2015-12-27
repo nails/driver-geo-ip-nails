@@ -45,10 +45,13 @@ class Nails implements \Nails\GeoIp\Interfaces\Driver
 
         try {
 
-            $oResponse = $oClient->get(
+            $oResponse = $oClient->request(
+                'GET',
                 $this::BASE_URL . '/' . $sIp . '/json',
                 array(
-                    'token' => $this->sAccessToken
+                    'query' => array(
+                        'token' => $this->sAccessToken
+                    )
                 )
             );
 
