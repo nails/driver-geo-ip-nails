@@ -21,7 +21,8 @@
     "prefer-stable": true,
     "require":
     {
-        "nailsapp/module-geo-ip": "dev-develop"
+        "nailsapp/module-geo-ip": "dev-develop",
+        "nailsapp/driver-geo-ip-ipinfo": "dev-develop"
     },
     "require-dev":
     {
